@@ -1,13 +1,15 @@
 #include <stdio.h>
 
 /**
- * main - function begins
- *
- * return: function ends
+ * Description: main - print out a string to stdout
+ * Return: 0 if successful
  */
 
 int main(void)
+
 {
+
 	puts("\"Programming is like building a multilingual puzzle");
-	return (0)
+	return (0);
+
 }
