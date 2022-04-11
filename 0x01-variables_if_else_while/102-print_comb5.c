@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 /**
- * main - prints numbers between 0 to 99
- * Return: 0 if successful
+ * main - prints all possible different combinations of three digits
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
