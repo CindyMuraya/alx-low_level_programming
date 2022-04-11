@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 /**
- * Description: main - determines if a number is positive, negative or zero
- * Return: Always 0 (Success)
+ * main - determines whether a number is positive, negative or zero
+ * Return: Always 0 if successful
  */
 int main(void)
 {
@@ -17,6 +17,6 @@ int main(void)
 	else if (n == 0)
 		printf("%d is zero\n", n);
 	else if (n < 0)
-		printf("%d is negative\n", n);
+		printf("%d id negative\n", n);
 	return (0);
 }
