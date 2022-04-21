@@ -34,6 +34,14 @@ int main(void)
 				break;
 			}
 		}
+		for (i = 0; password[i]; i++)
+		{
+			if (password[i] >= (33 + diff_half2))
+			{
+				password[i] -= diff_half2;
+				break;
+			}
+		}
 	}
 	printf("%s", password);
 	return (0);
