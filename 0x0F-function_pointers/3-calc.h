@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef CALC_H
 #define CALC_H
 
@@ -6,12 +7,17 @@
  * Description: contain all the function prototypes and
  * data structures used by the program
 =======
+=======
+>>>>>>> main
 #ifndef CALC_h
 #define CALC_H
 
 /*
  * Description: contains all the function prototypes
  * and data structures used by the program
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
  */
 
@@ -33,6 +39,10 @@ int op_mul(int a, int b);
 int op_div(int a, int b);
 int op_mod(int a, int b);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+int (*get_op_func(char *s))(int, int);
+>>>>>>> main
 =======
 int (*get_op_func(char *s))(int, int);
 >>>>>>> main
