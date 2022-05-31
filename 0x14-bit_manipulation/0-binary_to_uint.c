@@ -9,10 +9,10 @@
 
 unsigned int binary_to_uint(const char *b)
 {
-	unsigned int i, bin;
+	unsigned int i, dc;
 
 	i = 0;
-	bin = 0;
+	dc = 0;
 
 	if (b == NULL)
 	{
@@ -25,12 +25,12 @@ unsigned int binary_to_uint(const char *b)
 		{
 			return (0);
 		}
-		bin <<= 1;
+		dc <<= 1;
 		if (*(b + n) == '1')
 		{
-			bin ^= 1;
+			dc ^= 1;
 		}
 		n++;
 	}
-	return (bin);
+	return (dc);
 }
