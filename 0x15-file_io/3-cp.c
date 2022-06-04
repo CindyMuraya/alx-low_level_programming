@@ -1,75 +1,56 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BUFFER_SIZE 1024
-
 /**
- * close_w - close function
- * @fdread: read
- * @fdwrite: write
- */
-
-void close_w(int fdread, int fdwrite)
-{
-	if (close(fdwrite) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdwrite);
-		exit(100);
-	}
-	if (close(fdread) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdread);
-		exit(100);
-	}
-}
-
-/**
- * main - entry point
- * @argc: arguments
+ * main - program that copies the content of a file to another file
+ * @argc: command line arguments
  * @argv: array of pointers
- * Return: exit_success if success, exit error 97, 98, 99, 100
+ * Return: 0 if successful
  */
 
 int main(int argc, char *argv[])
 {
-	char buffer[BUFFER_SIZE];
-	char *file_from, *file_to;
-	int fdread, fdwrite;
-	ssize_t rd = 1024, wr;
+	int fd, fd_to;
+	int check_in, check_out;
+	char buff[1024];
 
 	if (argc != 3)
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	file_from = argv[1];
-	file_to = argv[2];
-	fdread = open(file_from, O_RDONLY);
-	if (fdread == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
-		exit(98);
-	}
-	fdwrite = open(file_to, O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0664);
-	if (fdwrite == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
-		exit(99);
-	}
-	while (rd == BUFFER_SIZE)
-	{
-		rd = read(fdread, buffer, BUFFER_SIZE);
-		if (rd == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
-			exit(98);
-		}
-		wr = write(fdwrite, buffer, rd);
-		if (wr == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"),
+			exit(97);
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n",
+			argv[1]), exit(98);
+	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (fd_to == -1)
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]),
 			exit(99);
-		}
+	check_in = check_out = 1;
+	while (check_in)
+	{
+		check_in = read(fd, buff, 1024);
+		if (check_in == -1)
+			dprintf(STDERR_FILENO,
+				"Error: Can't read from file %s\n", argv[1]),
+				exit(98);
+		if (check_in > 0)
+			check_out = write(fd_to, buff, check_in);
+			if (check_out == -1)
+				dprintf(STDERR_FILENO,
+					"Error: Can't write to %s\n", argv[2]),
+					exit(99);
 	}
-	close_w(fdread, fdwrite);
-
+	check_out = close(fd);
+	if (check_out == -1)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd),
+			exit(100);
+	check_out = close(fd_to);
+	if (check_out == -1)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to),
+			exit(100);
 	return (0);
 }
